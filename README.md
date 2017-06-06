@@ -9,7 +9,7 @@ Adds an API to interact with the Magento2 wishlist.
 Install the module via composer
 
 ```
-$ composer install "mediaman/module-wishlist-ap: 1.*"
+$ composer install "mediaman/module-wishlist-api: 1.*"
 ```
 
 Enable the module
