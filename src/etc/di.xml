@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+@copyright: Copyright © 2017 mediaman GmbH. All rights reserved.
+@see LICENSE.txt
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Mediaman\WishlistApi\Api\WishlistRepositoryInterface"
+                type="Mediaman\WishlistApi\Model\WishlistRepository"/>
+    <preference for="Mediaman\WishlistApi\Api\WishlistInterface"
+                type="Mediaman\WishlistApi\Model\Wishlist"/>
+    <preference for="Mediaman\WishlistApi\Api\ItemInterface"
+                type="Mediaman\WishlistApi\Model\Item"/>
+</config>

@@ -1,0 +1,8 @@
+parameters:
+    bootstrap: ./vendor/autoload.php
+    excludes_analyse:
+        - ./src/Test/Unit/Model/WishlistRepositoryTest.php
+    ignoreErrors:
+        - '#Property (.+) has unknown class (.*)Factory as its type#'
+        - '#(.+) has invalid typehint type (.*)Factory#'
+        - '#Call to method create\(\) on an unknown class (.*)Factory#'

@@ -1,0 +1,54 @@
+{
+  "name": "mediaman/module-wishlist-api",
+  "description": "Magento 2 module that provides an API to interact with the Wishlist module.",
+  "license": "GPL-3.0",
+  "type": "magento2-module",
+  "homepage": "http://mediaman.de/",
+  "keywords": [
+    "composer-installer",
+    "magento",
+    "Magento 2 Module",
+    "Magento 2",
+    "wishlist",
+    "api",
+    "headless",
+    "mediaman"
+  ],
+  "authors": [
+    {
+      "email": "hello@mediaman.com",
+      "name": "mediaman GmbH"
+    }
+  ],
+  "scripts": {
+    "phpcs": "phpcs --standard=PSR1,PSR2 ./src",
+    "static-analyse": "phpstan analyse -l 4 -c phpstan.neon ./src",
+    "test": "phpunit -c phpunit.xml",
+    "ci": "composer run phpcs && composer run static-analyse && composer run test"
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "magento/framework": "100.*",
+    "magento/module-integration": "100.*",
+    "php": ">=7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.1.0",
+    "squizlabs/php_codesniffer": "^3.0",
+    "phpstan/phpstan": "^0.7.0"
+  },
+  "repositories": {
+    "magento": {
+      "type": "composer",
+      "url": "https://repo.magento.com/"
+    }
+  },
+  "autoload": {
+    "files": [
+      "src/registration.php"
+    ],
+    "psr-4": {
+      "Mediaman\\WishlistApi\\": "src/"
+    }
+  }
+}
