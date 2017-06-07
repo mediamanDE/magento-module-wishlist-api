@@ -2,6 +2,8 @@
 
 Adds an API to interact with the Magento2 wishlist.
 
+[![Build Status](https://travis-ci.org/mediamanDE/magento-module-wishlist-api.svg?branch=master)](https://travis-ci.org/mediamanDE/magento-module-wishlist-api)
+
 ![Demo GIF](https://raw.githubusercontent.com/mediamanDE/magento-module-wishlist-api/master/demo.gif)
 
 ## Getting Started
