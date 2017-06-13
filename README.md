@@ -11,7 +11,7 @@ Adds an API to interact with the Magento2 wishlist.
 Install the module via composer
 
 ```
-$ composer install "mediaman/module-wishlist-api: 1.*"
+$ composer require "mediaman/module-wishlist-api: 1.*"
 ```
 
 Enable the module
