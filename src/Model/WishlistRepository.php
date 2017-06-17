@@ -85,6 +85,7 @@ class WishlistRepository implements WishlistRepositoryInterface
         $customerId = $this->customerSession->getCustomerId();
         if (!$customerId) {
             $authorizationHeader = $this->http->getHeader('Authorization');
+
             $tokenParts = explode('Bearer', $authorizationHeader);
             $tokenPayload = trim(array_pop($tokenParts));
 
@@ -98,6 +99,11 @@ class WishlistRepository implements WishlistRepositoryInterface
         /** @var Wishlist $wishlist */
         $wishlist = $this->wishlistFactory->create();
         $wishlist->loadByCustomerId($customerId);
+
+        if (!$wishlist->getId()) {
+            $wishlist->setCustomerId($customerId);
+            $wishlist->getResource()->save($wishlist);
+        }
 
         return $wishlist;
     }
