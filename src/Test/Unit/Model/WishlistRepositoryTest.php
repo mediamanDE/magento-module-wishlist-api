@@ -14,6 +14,7 @@ use Magento\Integration\Model\Oauth\Token;
 use Magento\Integration\Model\Oauth\TokenFactory;
 use Magento\Wishlist\Model\Item;
 use Magento\Wishlist\Model\ResourceModel\Item as ItemResource;
+use Magento\Wishlist\Model\ResourceModel\Wishlist as WishlistResource;
 use Mediaman\WishlistApi\Api\WishlistInterface;
 
 /**
@@ -37,6 +38,11 @@ class WishlistRepositoryTest extends \PHPUnit_Framework_TestCase
      * @var TokenFactory|\PHPUnit_Framework_MockObject_MockObject
      */
     private $tokenFactoryMock;
+
+    /**
+     * @var WishlistResource|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $wishlistResourceMock;
 
     /**
      * @var Wishlist|\PHPUnit_Framework_MockObject_MockObject
@@ -102,11 +108,17 @@ class WishlistRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->tokenFactoryMock->method('create')
             ->willReturn($this->tokenMock);
 
+        $this->wishlistResourceMock = $this->getMockBuilder(WishlistResource::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->wishlistMock = $this->getMockBuilder(Wishlist::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->wishlistMock->method('loadByCustomerId')
             ->willReturnSelf();
+        $this->wishlistMock->method('getResource')
+            ->willReturn($this->wishlistResourceMock);
 
         $this->wishlistFactoryMock = $this->getMockBuilder(WishlistFactory::class)
             ->disableOriginalConstructor()
@@ -151,6 +163,37 @@ class WishlistRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testGetCurrent()
     {
         $this->itShouldLoadAWishlist();
+
+        $this->assertSame($this->wishlistMock, $this->subject->getCurrent());
+    }
+
+    /**
+     * @test ::getCurrent with a customer without an existing wishlist
+     */
+    public function testGetCurrentNoPreExistingWishlist()
+    {
+        $customerIdMock = 42;
+        $this->customerSessionMock->expects(static::once())
+            ->method('getCustomerId')
+            ->willReturn($customerIdMock);
+
+        $this->wishlistMock->expects(static::once())
+            ->method('loadByCustomerId')
+            ->with($customerIdMock);
+
+        $this->wishlistMock->expects(static::once())
+            ->method('loadByCustomerId')
+            ->with($customerIdMock);
+
+        $this->wishlistMock->expects(static::once())
+            ->method('getId')
+            ->willReturn(null);
+        $this->wishlistMock->expects(static::once())
+            ->method('setCustomerId')
+            ->with($customerIdMock);
+        $this->wishlistResourceMock->expects(static::once())
+            ->method('save')
+            ->with($this->wishlistMock);
 
         $this->assertSame($this->wishlistMock, $this->subject->getCurrent());
     }
@@ -251,5 +294,9 @@ class WishlistRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->wishlistMock->expects(static::once())
             ->method('loadByCustomerId')
             ->with($customerIdMock);
+
+        $this->wishlistMock->expects(static::once())
+            ->method('getId')
+            ->willReturn(1);
     }
 }
